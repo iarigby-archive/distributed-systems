@@ -2,6 +2,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,31 +16,28 @@ public class Server {
         try (
             ServerSocket ss = new ServerSocket(port);
          ) {
-             while(true) {
-                 try (
+            while (true) {
+                try (
                     Socket s = ss.accept();
                     Scanner scanner = new Scanner(s.getInputStream());
                     PrintWriter printer = new PrintWriter(s.getOutputStream());
-                 ) {
-                    List<Integer> integers = new ArrayList<>();
-                    String number = scanner.nextLine();
-                    while (! number.equals("end")) {
-                        try {
-                            integers.add(Integer.parseInt(number));
-                            number = scanner.nextLine();
-                        } catch (NumberFormatException e) {
-                            printer.println("skipped non number");
+                ) {
+                    String fileName = scanner.nextLine();    
+                    Path filePath = Paths.get(fileName);
+                    if (filePath != null) {
+                        Scanner fileScanner = new Scanner(filePath);
+                        while (fileScanner.hasNextLine()) {
+                            printer.println(fileScanner.nextLine());    
                         }
+                        fileScanner.close();
+                    } else {
+                        printer.println("file does not exist");
                     }
-                    integers.forEach((n) -> {
-                        printer.println(2*n+1);
-                        printer.flush();
-                    });
-                    printer.println("end");
+                    printer.println("EOF");
                     printer.flush();
                     s.close();
-                 }
-             }
+                }
+            }  
         } 
     }
 }
