@@ -13,28 +13,32 @@ public class Server {
         int port = 12345;
         try (
             ServerSocket ss = new ServerSocket(port);
-            Socket s = ss.accept();
-
-            Scanner scanner = new Scanner(s.getInputStream());
-            PrintWriter printer = new PrintWriter(s.getOutputStream());
          ) {
-            List<Integer> integers = new ArrayList<>();
-            String number = scanner.nextLine();
-            while (! number.equals("end")) {
-                try {
-                    integers.add(Integer.parseInt(number));
-                    number = scanner.nextLine();
-                } catch (NumberFormatException e) {
-                    printer.println("skipped non number");
-                }
-            }
-            integers.forEach((n) -> {
-                printer.println(2*n+1);
-                printer.flush();
-            });
-            printer.println("end");
-            printer.flush();
-            s.close();
+             while(true) {
+                 try (
+                    Socket s = ss.accept();
+                    Scanner scanner = new Scanner(s.getInputStream());
+                    PrintWriter printer = new PrintWriter(s.getOutputStream());
+                 ) {
+                    List<Integer> integers = new ArrayList<>();
+                    String number = scanner.nextLine();
+                    while (! number.equals("end")) {
+                        try {
+                            integers.add(Integer.parseInt(number));
+                            number = scanner.nextLine();
+                        } catch (NumberFormatException e) {
+                            printer.println("skipped non number");
+                        }
+                    }
+                    integers.forEach((n) -> {
+                        printer.println(2*n+1);
+                        printer.flush();
+                    });
+                    printer.println("end");
+                    printer.flush();
+                    s.close();
+                 }
+             }
         } 
     }
 }
