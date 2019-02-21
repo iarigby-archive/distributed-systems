@@ -16,24 +16,15 @@ public class Server {
         try (
             ServerSocket ss = new ServerSocket(port);
          ) {
+             int n = 0;
             while (true) {
                 try (
                     Socket s = ss.accept();
                     Scanner scanner = new Scanner(s.getInputStream());
                     PrintWriter printer = new PrintWriter(s.getOutputStream());
                 ) {
-                    String fileName = scanner.nextLine();    
-                    Path filePath = Paths.get(fileName);
-                    if (filePath != null) {
-                        Scanner fileScanner = new Scanner(filePath);
-                        while (fileScanner.hasNextLine()) {
-                            printer.println(fileScanner.nextLine());    
-                        }
-                        fileScanner.close();
-                    } else {
-                        printer.println("file does not exist");
-                    }
-                    printer.println("EOF");
+                    n++;
+                    printer.println(n);
                     printer.flush();
                     s.close();
                 }

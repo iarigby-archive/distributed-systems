@@ -11,13 +11,8 @@ public class Client {
             Scanner scanner = new Scanner(socket.getInputStream());
             PrintWriter printer = new PrintWriter(socket.getOutputStream());
          ) {
-            printer.println(args[0]);
-            printer.flush();
             String n = scanner.nextLine();
-            while (! n.equals("EOF")) {
-                System.out.println(n);
-                n = scanner.nextLine();
-            }
+            System.out.println(n);
             socket.close();
         } 
     }
