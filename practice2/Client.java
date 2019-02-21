@@ -11,8 +11,15 @@ public class Client {
             Scanner scanner = new Scanner(socket.getInputStream());
             PrintWriter printer = new PrintWriter(socket.getOutputStream());
          ) {
-            String n = scanner.nextLine();
-            System.out.println(n);
+            for (int i = 0; i < args.length; i++) {
+                System.out.println(args[i]);
+                printer.println(args[i]);
+                printer.flush();
+                String n = scanner.nextLine();
+                System.out.println(n);
+            }
+            printer.println("exit");
+            printer.flush();
             socket.close();
         } 
     }

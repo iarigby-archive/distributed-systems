@@ -10,22 +10,28 @@ import java.util.List;
 
 public class Server {
 
-    private static String text = "sometext ";
     public static void main(String [] args) throws Exception {
         int port = 12345;
         try (
             ServerSocket ss = new ServerSocket(port);
          ) {
-             int n = 0;
+            int n = 0;
             while (true) {
                 try (
                     Socket s = ss.accept();
                     Scanner scanner = new Scanner(s.getInputStream());
                     PrintWriter printer = new PrintWriter(s.getOutputStream());
                 ) {
-                    n++;
-                    printer.println(n);
-                    printer.flush();
+                    String number = scanner.nextLine();    
+                    while (!number.equals("exit")) {
+                        try {
+                            n += Integer.parseInt(number);
+                            printer.println(n);
+                        } catch (NumberFormatException e) {
+                            printer.println("format error");
+                        }
+                        printer.flush();
+                    }
                     s.close();
                 }
             }  
