@@ -3,6 +3,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Server {
 
     private static String text = "sometext ";
@@ -15,16 +18,21 @@ public class Server {
             Scanner scanner = new Scanner(s.getInputStream());
             PrintWriter printer = new PrintWriter(s.getOutputStream());
          ) {
-            String n = scanner.nextLine();
-            try {
-                for (int i = 0; i < Integer.parseInt(n); i++) {
-                    printer.print(text);
+            List<Integer> integers = new ArrayList<>();
+            String number = scanner.nextLine();
+            while (! number.equals("end")) {
+                try {
+                    integers.add(Integer.parseInt(number));
+                    number = scanner.nextLine();
+                } catch (NumberFormatException e) {
+                    printer.println("skipped non number");
                 }
-                printer.println();
-            } catch (NumberFormatException e) {
-                printer.println("you should send a number");
             }
-            
+            integers.forEach((n) -> {
+                printer.println(2*n+1);
+                printer.flush();
+            });
+            printer.println("end");
             printer.flush();
             s.close();
         } 

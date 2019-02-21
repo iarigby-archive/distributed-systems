@@ -1,5 +1,7 @@
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Client {
@@ -11,10 +13,25 @@ public class Client {
             Scanner scanner = new Scanner(socket.getInputStream());
             PrintWriter printer = new PrintWriter(socket.getOutputStream());
          ) {
-            printer.println(args[0]);
+            Path filePath = Paths.get("ex2numbers.txt");
+            Scanner fileScanner = new Scanner(filePath);
+            
+            while (fileScanner.hasNext()) {
+                if (fileScanner.hasNextInt()) {
+                    printer.println(fileScanner.nextInt());
+                    printer.flush();
+                } else {
+                    fileScanner.next();
+                }
+            }
+            fileScanner.close();
+            printer.println("end");
             printer.flush();
-            String text = scanner.nextLine();
-            System.out.println(text);
+            String n = scanner.nextLine();
+            while (! n.equals("end")) {
+                System.out.println(n);
+                n = scanner.nextLine();
+            }
             socket.close();
         } 
     }
