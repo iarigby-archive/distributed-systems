@@ -1,6 +1,17 @@
 import java.util.Random;
 
 public class Exercise2 {
+    /*
+    wo goats are trying to cross a bridge, but they cannot pass each other.
+    Instead, they meet in the middle and try to push each other off the bridge.
+    To do that, a goat takes its time to gather power (between 0.5 and 2.0 seconds),
+    and then moves forward one step, pushing the other goat one step backwards.
+    At each push, print the position of the two goats,
+    and whenever one of the goats falls off the bridge,
+    the application should end, and announce which goat has managed to go through.
+
+    The length of the bridge is given in a command line argument.
+    */
     public static void main(String[] args) throws Exception {
         try {
             int len = Integer.parseInt(args[0]);
@@ -22,6 +33,7 @@ public class Exercise2 {
             System.out.println("Something went wrong");
             e.printStackTrace();
         }
+        System.out.println("The runtime was faster because wait time was decreased. See line 64");
     }
 }
 

@@ -1,16 +1,18 @@
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws Exception {
-        try (Socket socket = new Socket("localhost", 12345);) {
+        try {
+            Socket socket = new Socket("localhost", 12345);
             Object lock = new Object();
             Sender s = new Sender(socket, lock);
             Receiver r = new Receiver(socket, lock);
             s.run();
             r.run();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

@@ -5,22 +5,21 @@ import java.io.PrintWriter;
 
 public class Server {
     public static void main(String[] args) throws Exception {
-        try (ServerSocket ss = new ServerSocket(12345);) {
-            // while (true) {
-            try (Socket s1 = ss.accept(); Socket s2 = ss.accept();) {
-                System.out.println("connected");
-                Object lock = new Object();
-                Member c1 = new Member("u1", s1, s2, lock);
-                Member c2 = new Member("u2", s2, s1, lock);
-                c1.run();
-                c2.run();
-                s1.close();
-                s2.close();
-            }
-
+        try {
+            ServerSocket ss = new ServerSocket(12345);
+            Socket s1 = ss.accept(); 
+            System.out.println("waiting for second connection...");
+            Socket s2 = ss.accept();
+            System.out.println("connected");
+            Object lock = new Object();
+            Member c1 = new Member("u1", s1, s2, lock);
+            Member c2 = new Member("u2", s2, s1, lock);
+            c1.run();
+            c2.run();
             ss.close();
-            // }
-        }
+        } catch (Exception e) {
+            System.out.println(e);
+        }      
     }
 }
 
