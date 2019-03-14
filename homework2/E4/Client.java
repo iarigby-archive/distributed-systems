@@ -1,6 +1,6 @@
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.io.*;
+import java.util.*;
+import java.net.*;
 
 class Client {
     public static void main(String[] args) {
@@ -9,18 +9,17 @@ class Client {
         
         try {
             Socket s = new Socket("localhost", 12345);
-            ObjectInputStream input = new ObjectInputStream(s.getInputStream());
             ObjectOutputStream outputStream = new ObjectOutputStream(s.getOutputStream());
+            ObjectInputStream input = new ObjectInputStream(s.getInputStream());
             
-            System.out.println("c here");
             outputStream.writeObject(p1);
-            // outputStream.flush();
-            // outputStream.writeObject(p2);
-            // outputStream.flush();
+            outputStream.writeObject(p2);
             p1 = (Person) input.readObject();
-            // p2 = (Person) input.readObject();
+            p2 = (Person) input.readObject();
+            outputStream.close();
             System.out.println(p1);
             System.out.println(p2);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println(e);}
     }
 }
