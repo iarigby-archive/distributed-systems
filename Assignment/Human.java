@@ -6,26 +6,17 @@ public class Human extends Player {
     public Scanner input;
     public PrintWriter printer;
 
-    public Human(int player, Scanner input) {
+    public Human(int player, Scanner input, PrintWriter printer) {
         super(player);
         this.input = input;
         this.player = player;
-        this.printer = new PrintWriter(System.out);
-        println("Player created!");
+        this.printer = printer;
     }
 
-    public Human(int player) {
-        this(player, new Scanner(System.in));
-    }
-
-    private void print(String s) {
-        printer.print(s);
-        System.out.println("here");
-        // printer.flush();
-    }
-
-    private void println(String s) {
-        print(s + "\n");
+    public void println(String s) {
+        // System.out.print(s);
+        printer.println(s);
+        printer.flush();
     }
 
     @Override
@@ -38,12 +29,12 @@ public class Human extends Player {
     public void Try(Board board) {
         do {
             do {
-                print("Line: ");
-                
+                println("enter Line: ");
+                String in = input.nextLine();
                 try {
-                    attempt[0] = input.nextInt();
+                    attempt[0] = Integer.parseInt(in);
                 } catch (Exception e) {
-                    println("you can only enter a number");
+                    println("you can only input a number");
                 }
                 if (attempt[0] > 3 || attempt[0] < 1)
                     println("Invalid line. It's 1, 2 or 3");
@@ -51,9 +42,13 @@ public class Human extends Player {
             } while (attempt[0] > 3 || attempt[0] < 1);
 
             do {
-                print("Column: ");
-                attempt[1] = input.nextInt();
-
+                println("enter Column: ");
+                String in = input.nextLine();
+                try {
+                    attempt[1] = Integer.parseInt(in);
+                } catch (Exception e) {
+                    println("you can only input a number");
+                }
                 if (attempt[1] > 3 || attempt[1] < 1)
                     println("Invalid column. É 1, 2 or 3");
 

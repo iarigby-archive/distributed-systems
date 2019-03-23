@@ -12,28 +12,28 @@ public class Board {
                 Board[line][column]=0;
     }
 
-    public void showBoard(){
-        System.out.println();
+    public String showBoard(){
+        String board = "\n";
         for(int line=0 ; line<3 ; line++){
 
             for(int column=0 ; column<3 ; column++){
 
                 if(Board[line][column]==-1){
-                    System.out.print(" X ");
+                    board = board + " X ";
                 }
                 if(Board[line][column]==1){
-                    System.out.print(" O ");
+                    board = board + " O ";
                 }
                 if(Board[line][column]==0){
-                    System.out.print("   ");
+                    board = board + "   ";
                 }
 
                 if(column==0 || column==1)
-                    System.out.print("|");
+                    board = board + "|";
             }
-            System.out.println();
+            board = board + "\n";
         }
-
+        return board;
     }
 
     public int getPosition(int[] attempt){

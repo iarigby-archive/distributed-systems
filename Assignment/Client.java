@@ -12,14 +12,16 @@ class Client {
             Scanner sc = new Scanner(s.getInputStream());
             PrintWriter pw = new PrintWriter(s.getOutputStream());
             Scanner input = new Scanner(System.in);
-            while (sc.hasNext()) {
-                System.out.println(sc.next());
-                pw.println(input.nextLine());
-                pw.flush();
+            while (true) {
+
+                String msg = sc.nextLine();
+                System.out.println(msg);
+                if (msg.contains("enter")) {
+                    pw.println(input.nextLine());
+                    pw.flush();
+                }
+
             }
-            input.close();
-            sc.close();
-            s.close();
         } catch (Exception e) {
             System.out.println(e);
         }

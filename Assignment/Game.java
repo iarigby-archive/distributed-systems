@@ -1,37 +1,50 @@
 
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class Game {
     private Board board;
     private int turn = 1, who = 1;
-    private Player player1;
-    private Player player2;
+    private Human player1;
+    private Human player2;
     public Scanner input = new Scanner(System.in);
 
     public Game() {
         board = new Board();
-        startPlayers();
-        while (Play()) {}
-            
     }
 
-    public void startPlayers() {
-        // TODO: pass input and ouputs
-        this.player1 = new Human(1);
-        this.player2 = new Human(2);
+    public void startPlayer(int p, Scanner input, PrintWriter printer) {
+        if (p == 1) {
+            this.player1 = new Human(p, input, printer);
+        } else {
+            this.player2 = new Human(p, input, printer);
+        }
+    }
+
+    public void run() {
+        while (Play()) {
+            System.out.println("game on");
+        }
     }
 
     public boolean Play() {
-        board.showBoard();
         if (won() == 0) {
             System.out.println("----------------------");
             System.out.println("\nTurn " + turn);
             System.out.println("It's turn of Player " + who());
-
-            if (who() == 1)
+            String s = board.showBoard();
+            System.out.println(s);
+            player1.println(s);
+            player2.println(s);
+            if (who() == 1) {
+                player1.println("it's your turn");
+                player2.println("player 1 is playing");
                 player1.play(board);
-            else
+            } else {
+                player2.println("it's your turn");
+                player1.println("player 2 is playing");
                 player2.play(board);
+            }
 
             if (board.fullBoard()) {
                 System.out.println("Full Board. Draw!");
