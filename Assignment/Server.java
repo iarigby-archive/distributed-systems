@@ -14,6 +14,7 @@ class Server {
                 Scanner sc1 = new Scanner(player1.getInputStream());
                 PrintWriter pw1 = new PrintWriter(player1.getOutputStream());
                 pw1.println("welcome! wait for another player to join in");
+                pw1.flush();
                 Socket player2 = ss.accept();
                 // TODO: try to pass these
                 Scanner sc2 = new Scanner(player2.getInputStream());

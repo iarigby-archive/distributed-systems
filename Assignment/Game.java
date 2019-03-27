@@ -22,6 +22,8 @@ public class Game {
     }
 
     public void run() {
+        player1.println("Game started! you're player 1");
+        player2.println("Game started! you're player 2");
         while (Play()) {
             System.out.println("game on");
         }
