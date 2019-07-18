@@ -20,8 +20,10 @@ class Client {
                     pw.println(input.nextLine());
                     pw.flush();
                 }
-
+                if (msg.contains("won"))
+                    break;
             }
+            s.close();
         } catch (Exception e) {
             System.out.println(e);
         }

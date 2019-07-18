@@ -26,9 +26,7 @@ public class Client{
 			
 			outputStream.close();
 			
-			input.readObject();
-			
-			
+			socket.close();
 			
 		}catch(Exception e){
 			System.out.println(e);

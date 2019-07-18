@@ -24,9 +24,7 @@ public class Game {
     public void run() {
         player1.println("Game started! you're player 1");
         player2.println("Game started! you're player 2");
-        while (Play()) {
-            System.out.println("game on");
-        }
+        while (Play()) {}
     }
 
     public boolean Play() {
@@ -54,14 +52,16 @@ public class Game {
             }
             who++;
             turn++;
-
             return true;
         } else {
+            String msg;
             if (won() == -1)
-                System.out.println("Player 1 won!");
+                msg = "Player 1 won!";
             else
-                System.out.println("Player 2 won!");
-
+                msg = "Player 2 won!";
+            System.out.println(msg);
+            player1.println(msg);
+            player2.println(msg);
             return false;
         }
 
